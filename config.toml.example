@@ -1,0 +1,6 @@
+BOT_TOKEN = "12345:wow"
+CERT_FILE = "wow.pem"
+KEY_FILE = "wow.key"
+PORT = 443
+ROUTE = "/wow"
+MAX_WAIT = 5
