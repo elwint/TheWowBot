@@ -4,3 +4,10 @@ KEY_FILE = "wow.key"
 PORT = 443
 ROUTE = "/wow"
 MAX_WAIT = 5
+INLINE_TEXT = '''```
+__      _______      __
+\ \ /\ / / _ \ \ /\ / /
+ \ V  V / (_) \ V  V /
+  \_/\_/ \___/ \_/\_/
+```'''
+INLINE_TUMB = "https://drive.google.com/uc?export=view&id=16IuU1JzXdvZriqEg3NFDCHqVT3SCDh2C"

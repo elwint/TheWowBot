@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -33,15 +35,29 @@ func sendWow(id int, maxWait int) {
 	}
 	wow <- -1 * id
 
-	resp, err := http.Get(fmt.Sprintf(`https://api.telegram.org/bot%s/sendMessage?chat_id=%d&text=wow`, conf.Token, id))
+	call(`sendMessage`, sendMessage{
+		ID:   id,
+		Text: `wow`,
+	})
+}
+
+func call(method string, i interface{}) {
+	b, err := json.Marshal(i)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	url := fmt.Sprintf(`https://api.telegram.org/bot%s/%s`, conf.Token, method)
+	resp, err := http.Post(url, `application/json`, bytes.NewBuffer(b))
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	defer resp.Body.Close()
 
-	b, _ := ioutil.ReadAll(resp.Body)
+	r, _ := ioutil.ReadAll(resp.Body)
 	if resp.StatusCode != http.StatusOK {
-		log.Printf("%d: %s\n", resp.StatusCode, b)
+		log.Printf("%d: %s\n", resp.StatusCode, r)
 	}
 }
