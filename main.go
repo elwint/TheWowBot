@@ -24,10 +24,10 @@ func main() {
 }
 
 func postUpdate(c *router.Context, u update) error {
-	if strings.EqualFold(u.Message.Text, `/start`) {
-		sendWow(u.Message.Chat.ID, 0)
-	} else if strings.EqualFold(u.Message.Text, `wow`) {
+	if strings.EqualFold(u.Message.Text, `wow`) || strings.EqualFold(u.Message.Text, `/wow`) {
 		wow <- u.Message.Chat.ID
+	} else if strings.EqualFold(u.Message.Text, `/start`) {
+		sendWow(u.Message.Chat.ID, 0)
 	}
 
 	return c.NoContent(http.StatusOK)
