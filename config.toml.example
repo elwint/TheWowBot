@@ -4,7 +4,7 @@ KEY_FILE = "wow.key"
 PORT = 443
 ROUTE = "/wow"
 MAX_WAIT = 5
-INLINE_TEXT = '''```
+ASCII_WOW = '''```
 __      _______      __
 \ \ /\ / / _ \ \ /\ / /
  \ V  V / (_) \ V  V /

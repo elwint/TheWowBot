@@ -25,10 +25,10 @@ func main() {
 
 func postUpdate(c *router.Context, u update) error {
 	if u.Message != nil {
-		if strings.EqualFold(u.Message.Text, `wow`) || strings.EqualFold(u.Message.Text, `/wow`) {
+		if u.Message.Text == `/start` || strings.EqualFold(u.Message.Text, `/wow`) {
+			sendWow(u.Message.Chat.ID, 0, true)
+		} else if strings.EqualFold(u.Message.Text, `wow`) {
 			wow <- u.Message.Chat.ID
-		} else if strings.EqualFold(u.Message.Text, `/start`) {
-			sendWow(u.Message.Chat.ID, 0)
 		}
 	}
 
@@ -39,7 +39,7 @@ func postUpdate(c *router.Context, u update) error {
 			Title:    `wow`,
 			ThumbURL: conf.InlineTumb,
 		}
-		q.Content.Text = conf.InlineText
+		q.Content.Text = conf.ASCII
 		q.Content.ParseMode = `Markdown`
 
 		call(`answerInlineQuery`, answerInlineQuery{

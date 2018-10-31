@@ -24,21 +24,27 @@ func handleWow() {
 
 		if chat[id] < 1000 {
 			chat[id]++
-			go sendWow(id, conf.MaxWait)
+			go sendWow(id, conf.MaxWait, false)
 		}
 	}
 }
 
-func sendWow(id int, maxWait int) {
+func sendWow(id int, maxWait int, ascii bool) {
 	if maxWait > 0 {
 		time.Sleep(time.Duration(rand.Intn(maxWait)) * time.Second)
 	}
 	wow <- -1 * id
 
-	call(`sendMessage`, sendMessage{
-		ID:   id,
-		Text: `wow`,
-	})
+	m := sendMessage{
+		ID:        id,
+		Text:      `wow`,
+		ParseMode: `Markdown`,
+	}
+	if ascii {
+		m.Text = conf.ASCII
+	}
+
+	call(`sendMessage`, m)
 }
 
 func call(method string, i interface{}) {

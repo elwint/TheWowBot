@@ -7,7 +7,7 @@ type config struct {
 	Port       int    `toml:"PORT"`
 	Route      string `toml:"ROUTE"`
 	MaxWait    int    `toml:"MAX_WAIT"`
-	InlineText string `toml:"INLINE_TEXT"`
+	ASCII      string `toml:"ASCII_WOW"`
 	InlineTumb string `toml:"INLINE_TUMB"`
 }
 
@@ -24,8 +24,9 @@ type update struct {
 }
 
 type sendMessage struct {
-	ID   int    `json:"chat_id"`
-	Text string `json:"text"`
+	ID        int    `json:"chat_id"`
+	Text      string `json:"text"`
+	ParseMode string `json:"parse_mode,omitempty"`
 }
 
 type answerInlineQuery struct {
