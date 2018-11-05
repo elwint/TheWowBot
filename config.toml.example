@@ -1,13 +1,32 @@
 BOT_TOKEN = "12345:wow"
 CERT_FILE = "wow.pem"
 KEY_FILE = "wow.key"
-PORT = 443
+PORT = 8443
 ROUTE = "/wow"
 MAX_WAIT = 5
+INLINE_TUMB = "https://drive.google.com/uc?export=view&id=16IuU1JzXdvZriqEg3NFDCHqVT3SCDh2C"
 ASCII_WOW = '''```
 __      _______      __
 \ \ /\ / / _ \ \ /\ / /
  \ V  V / (_) \ V  V /
   \_/\_/ \___/ \_/\_/
 ```'''
-INLINE_TUMB = "https://drive.google.com/uc?export=view&id=16IuU1JzXdvZriqEg3NFDCHqVT3SCDh2C"
+ASCII_RIP = '''```
+  _____  _____ _____
+ |  __ \|_   _|  __ \
+ | |__) | | | | |__) |
+ |  _  /  | | |  ___/
+ | | \ \ _| |_| |
+ |_|  \_\_____|_|
+```'''
+ASCII_ILLUMINATI = '''```
+       /\
+      /  \
+     /,--.\
+    /< () >\
+   /  `--'  \
+  /          \
+ /            \
+/______________\
+```'''
+STICKER_ILLUMINATI = "CAADBAADIQADI9s0CkHuOhiht5QBAg"

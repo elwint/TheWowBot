@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/BurntSushi/toml"
@@ -15,7 +17,6 @@ func main() {
 	if _, err := toml.DecodeFile(`config.toml`, &conf); err != nil {
 		panic(err)
 	}
-
 	go handleWow()
 
 	r := router.New()
@@ -25,28 +26,35 @@ func main() {
 
 func postUpdate(c *router.Context, u update) error {
 	if u.Message != nil {
-		if u.Message.Text == `/start` || strings.EqualFold(u.Message.Text, `/wow`) {
-			sendWow(u.Message.Chat.ID, 0, true)
-		} else if strings.EqualFold(u.Message.Text, `wow`) {
-			wow <- u.Message.Chat.ID
-		}
+		message(u.Message.Chat.ID, u.Message.Text)
 	}
-
 	if u.InlineQuery != nil {
-		q := inlineQueryResult{
-			Kind:     `article`,
-			ID:       `wow`,
-			Title:    `wow`,
-			ThumbURL: conf.InlineTumb,
-		}
-		q.Content.Text = conf.ASCII
-		q.Content.ParseMode = `Markdown`
-
-		call(`answerInlineQuery`, answerInlineQuery{
-			ID:      u.InlineQuery.ID,
-			Results: []inlineQueryResult{q},
-		})
+		inlineQuery(u.InlineQuery.ID)
 	}
 
 	return c.NoContent(http.StatusOK)
+}
+
+func message(id int, text string) {
+	if text == `/start` || strings.EqualFold(text, `/wow`) {
+		send(id, conf.Wow)
+	} else if strings.EqualFold(text, `/rip`) {
+		send(id, conf.RIP)
+	} else if matched, _ := regexp.MatchString(`(?i)illuminati|triangle|driehoek`, text); matched {
+		send(id, []string{conf.Illuminati, conf.StickerIlluminati}[rand.Intn(2)])
+	} else if matched, _ := regexp.MatchString(`(?i)wo+?w`, text); matched {
+		wow <- id
+	}
+}
+
+func inlineQuery(id string) {
+	call(`answerInlineQuery`, answerInlineQuery{
+		ID: id,
+		Results: []inlineQueryResult{
+			result(`Illuminati Sticker`, conf.StickerIlluminati),
+			result(`Wow`, conf.Wow),
+			result(`RIP`, conf.RIP),
+			result(`Illuminati`, conf.Illuminati),
+		},
+	})
 }
