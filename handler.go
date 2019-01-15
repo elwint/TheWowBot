@@ -2,24 +2,23 @@ package main
 
 import (
 	"math/rand"
+	"sync"
 	"time"
 )
 
 var wow = make(chan int)
+var limit = make(map[int]int)
+var lock = sync.Mutex{}
 
 func handleWow() {
-	chat := make(map[int]int)
 	for {
 		id := <-wow
-		if id < 0 {
-			chat[-1*id]--
-			continue
-		}
-
-		if chat[id] < 1000 {
-			chat[id]++
+		lock.Lock()
+		if limit[id] < 100 {
+			limit[id]++
 			go sendWow(id)
 		}
+		lock.Unlock()
 	}
 }
 
@@ -27,7 +26,9 @@ func sendWow(id int) {
 	if conf.MaxWait > 0 {
 		time.Sleep(time.Duration(rand.Intn(conf.MaxWait)) * time.Second)
 	}
-	wow <- -1 * id
+	lock.Lock()
+	limit[id]--
+	lock.Unlock()
 
 	send(id, []string{`Wow`, conf.Wow}[rand.Intn(2)])
 }
