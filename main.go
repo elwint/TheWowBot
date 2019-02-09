@@ -42,6 +42,8 @@ func message(id int, text string) {
 		send(id, conf.Wow)
 	} else if strings.EqualFold(text, `/rip`) {
 		send(id, conf.RIP)
+	} else if strings.EqualFold(text, `/cancel`) {
+		cancelWow(id)
 	} else if matched, _ := regexp.MatchString(`(?i)illuminati|triangle|driehoek`, text); matched {
 		send(id, []string{conf.Illuminati, conf.StickerIlluminati}[rand.Intn(2)])
 	} else if matched, _ := regexp.MatchString(`(?i)wo+?w`, text); matched {
