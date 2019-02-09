@@ -2,6 +2,7 @@ package main
 
 type config struct {
 	Token             string `toml:"BOT_TOKEN"`
+	Username          string `toml:"BOT_USERNAME"`
 	CertFile          string `toml:"CERT_FILE"`
 	KeyFile           string `toml:"KEY_FILE"`
 	Port              int    `toml:"PORT"`

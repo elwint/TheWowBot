@@ -1,4 +1,5 @@
 BOT_TOKEN = "12345:wow"
+BOT_USERNAME = "TheWowBot"
 CERT_FILE = "wow.pem"
 KEY_FILE = "wow.key"
 PORT = 8443

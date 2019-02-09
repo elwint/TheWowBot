@@ -36,6 +36,8 @@ func postUpdate(c *router.Context, u update) error {
 }
 
 func message(id int, text string) {
+	text = strings.TrimSuffix(text, `@`+conf.Username)
+
 	if text == `/start` || strings.EqualFold(text, `/wow`) {
 		send(id, conf.Wow)
 	} else if strings.EqualFold(text, `/rip`) {
